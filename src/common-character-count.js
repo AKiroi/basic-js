@@ -13,9 +13,9 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 
  const getCommonCharacterCount = (s1, s2) => {
-	let arrS2 = [...s2];
+	const arrS2 = [...s2];
 	return [...s1].reduce((acc, item) => {
-		let index = arrS2.findIndex((letter) => letter === item);
+		const index = arrS2.findIndex(letter => letter === item);
 		if (index >= 0) {
 			acc += 1;
 			arrS2.splice(index, 1);

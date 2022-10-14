@@ -15,7 +15,7 @@ const { NotImplementedError } = require('../extensions/index.js');
  const deleteDigit = n => {
 	const arr = n.toString().split('');
 	const res = arr.map((_, i) => {
-		 let newArr = [...arr];
+		 const newArr = [...arr];
 		 newArr.splice(i, 1);
 		 return +newArr.join('');
 	})

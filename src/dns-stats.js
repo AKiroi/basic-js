@@ -25,7 +25,7 @@ const { NotImplementedError } = require('../extensions/index.js');
 
  const getDNSStats = arr => {
 	return arr.reduce((acc, item) => {
-		const arrDomain =  item.split('.').reverse();
+		const arrDomain = item.split('.').reverse();
 		let tempDNS = '';
 		arrDomain.forEach(elDNS => {
 			tempDNS += `.${elDNS}`;
