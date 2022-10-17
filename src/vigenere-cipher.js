@@ -19,15 +19,64 @@ const { NotImplementedError } = require('../extensions/index.js');
  * reverseMachine.decrypt('AEIHQX SX DLLU!', 'alphonse') => '!NWAD TA KCATTA'
  * 
  */
-class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
-  }
+ class VigenereCipheringMachine {
+   constructor(type = true) {
+      this.type = type;
+		this.lang = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+   }
+
+   encrypt(message, key) {
+      if (!message || !key) {
+         throw new Error(`Incorrect arguments!`);
+      }
+
+      key = key.toUpperCase();
+
+      const arr = message
+         .toUpperCase()
+         .split('')
+         .filter((el) => this.lang.includes(el))
+         .reduce((acc, item, i) => {
+            const index = (this.lang.indexOf(item) + this.lang.indexOf(key[i % key.length])) % this.lang.length;
+            this.lang.indexOf(item) >= 0 ? acc.push(this.lang[index]) : acc.push(item);
+            return acc;
+         }, [])
+         .reverse();
+
+      const res = [...message].reduce(
+         (acc, item) => (this.lang.includes(item.toUpperCase()) ? [...acc, arr.pop()] : [...acc, item]),
+         [],
+      );
+
+      return this.type ? res.join('') : res.reverse().join('');
+   }
+
+   decrypt(message, key) {
+      if (!message || !key) {
+         throw new Error(`Incorrect arguments!`);
+      }
+
+      key = key.toUpperCase();
+
+      const arr = message
+         .toUpperCase()
+         .split('')
+         .filter((el) => this.lang.includes(el))
+         .reduce((acc, item, i) => {
+            const index =
+               (this.lang.indexOf(item) + this.lang.length - this.lang.indexOf(key[i % key.length])) % this.lang.length;
+            this.lang.indexOf(item) >= 0 ? acc.push(this.lang[index]) : acc.push(item);
+            return acc;
+         }, [])
+         .reverse();
+
+      const res = [...message].reduce(
+         (acc, item) => (this.lang.includes(item.toUpperCase()) ? [...acc, arr.pop()] : [...acc, item]),
+         [],
+      );
+
+      return this.type ? res.join('') : res.reverse().join('');
+   }
 }
 
 module.exports = {
